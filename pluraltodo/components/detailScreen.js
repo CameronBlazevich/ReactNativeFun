@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, Button, StyleSheet, View, Text } from 'react-native';
+import TrainingProductDetailApi from '../services/mockServices/mockTrainingProductDetailApi';
 
 const styles = StyleSheet.create({
   icon: {
@@ -17,6 +18,12 @@ const styles = StyleSheet.create({
 });
 
 class DetailScreen extends React.Component {
+  async componentWillMount() {
+    // need to figure out how to pass props on navigation
+    const productDetail = await TrainingProductDetailApi.getTrainingProductDetailById(2);
+    console.log(productDetail);
+  }
+
   render(props) {
     return (
       <View style={styles.container}>

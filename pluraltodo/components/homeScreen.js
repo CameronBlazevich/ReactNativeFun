@@ -53,8 +53,8 @@ class MyHomeScreen extends React.Component {
     return trainingProducts;
   }
 
-  openDetailsScreen = () => {
-    console.log('Pressed');
+  openDetailsScreen = (productId) => {
+    console.log(`Pressed ${productId}`);
     this.props.navigation.navigate('Details');
   };
 

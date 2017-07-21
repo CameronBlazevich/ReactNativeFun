@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     height: 100,
     margin: 5,
     borderColor: 'black',
-    borderStyle: 'solid',
+    // borderStyle: 'solid',
     borderWidth: 1,
   },
   container: {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 function TrainingProductPreview(props) {
   return (
-    <TouchableHighlight onPress={props.onSelectTrainingProduct}>
+    <TouchableHighlight onPress={() => props.onSelectTrainingProduct(props.id)}>
       <View style={styles.container}>
         <Image style={styles.preview} source={{ uri: props.imageLocation }} />
         <Text style={styles.title}>
