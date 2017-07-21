@@ -1,6 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, View, ScrollView } from 'react-native';
-// import PropTypes from 'prop-types';
+import { Image, Button, StyleSheet, Text, View, ScrollView } from 'react-native';
 import TrainingProductScrollView from './trainingProductScrollView';
 import FreeResourcesScrollView from './freeResourcesScrollView';
 import TrainingProductApi from '../services/mockServices/mockTrainingProductApi';
@@ -53,21 +52,13 @@ class MyHomeScreen extends React.Component {
     return trainingProducts;
   }
 
-  openDetailsScreen = (productId) => {
-    console.log(`Pressed ${productId}`);
-    this.props.navigation.navigate('Details');
-  };
-
   render() {
     const { trainingProducts } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.body}>
           <ScrollView>
-            <TrainingProductScrollView
-              trainingProducts={trainingProducts}
-              onSelectTrainingProduct={this.openDetailsScreen}
-            />
+            <TrainingProductScrollView trainingProducts={trainingProducts} />
             <View style={{ height: 35 }} />
             <FreeResourcesScrollView />
           </ScrollView>
