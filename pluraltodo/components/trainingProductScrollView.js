@@ -28,10 +28,8 @@ function TrainingProductScrollView(props) {
       {productPair.map(product =>
         (<TrainingProductPreview
           key={product.id}
-          id={product.id}
           title={product.title}
           imageLocation={product.imageLocation}
-          onSelectTrainingProduct={props.onSelectTrainingProduct}
         />),
       )}
     </View>),
