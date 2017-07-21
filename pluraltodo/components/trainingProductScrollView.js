@@ -30,6 +30,7 @@ function TrainingProductScrollView(props) {
           key={product.id}
           title={product.title}
           imageLocation={product.imageLocation}
+          onSelectTrainingProduct={props.onSelectTrainingProduct}
         />),
       )}
     </View>),

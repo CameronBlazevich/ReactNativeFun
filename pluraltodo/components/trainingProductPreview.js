@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableHighlight } from 'react-native';
 
 const styles = StyleSheet.create({
   preview: {
@@ -23,12 +23,14 @@ const styles = StyleSheet.create({
 
 function TrainingProductPreview(props) {
   return (
-    <View style={styles.container}>
-      <Image style={styles.preview} source={{ uri: props.imageLocation }} />
-      <Text style={styles.title}>
-        {props.title}
-      </Text>
-    </View>
+    <TouchableHighlight onPress={props.onSelectTrainingProduct}>
+      <View style={styles.container}>
+        <Image style={styles.preview} source={{ uri: props.imageLocation }} />
+        <Text style={styles.title}>
+          {props.title}
+        </Text>
+      </View>
+    </TouchableHighlight>
   );
 }
 
