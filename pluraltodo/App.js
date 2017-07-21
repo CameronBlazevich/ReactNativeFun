@@ -1,14 +1,29 @@
 import React from 'react';
 import {} from 'react-native';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import MyHomeScreen from './components/homeScreen';
 import SettingsScreen from './components/settingsScreen';
 import VideosScreen from './components/videosScreen';
+import DetailScreen from './components/detailScreen';
+
+const StackNav = StackNavigator(
+  {
+    Home: {
+      screen: MyHomeScreen,
+    },
+    Details: {
+      screen: DetailScreen,
+    },
+  },
+  {
+    headerMode: 'none',
+  },
+);
 
 const MyApp = TabNavigator(
   {
     Home: {
-      screen: MyHomeScreen,
+      screen: StackNav,
     },
     Videos: {
       screen: VideosScreen,
