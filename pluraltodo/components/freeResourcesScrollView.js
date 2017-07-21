@@ -1,0 +1,40 @@
+import React from 'react';
+import { View, ScrollView } from 'react-native';
+import HeadingRow from './headingRow';
+import TrainingProductPreview from './trainingProductPreview';
+
+function FreeResourcesScrollView(props) {
+  return (
+    <View>
+      <HeadingRow text="Free Resources" />
+      <ScrollView horizontal>
+        <View>
+          <TrainingProductPreview
+            title="Preflop Charts"
+            imageLocation="https://1qfpnw417h1n3a4c4m10ltpd-wpengine.netdna-ssl.com/wp-content/uploads/2015/08/Preflop-guide-300x195.jpg"
+          />
+        </View>
+        <View>
+          <TrainingProductPreview
+            title="Rules for Playing Flush Draws in 2017"
+            imageLocation="https://1qfpnw417h1n3a4c4m10ltpd-wpengine.netdna-ssl.com/wp-content/uploads/2016/12/20-Rules-For-Playing-Flush-Draws-in-2017.png"
+          />
+        </View>
+        <View>
+          <TrainingProductPreview
+            title="Heads-Up No Limit Video Series"
+            imageLocation="https://1qfpnw417h1n3a4c4m10ltpd-wpengine.netdna-ssl.com/wp-content/uploads/2017/02/Heads-Up-Video-Seriesv2.png"
+          />
+        </View>
+        <View>
+          <TrainingProductPreview
+            title="10 Pot Limit Omaha Secrets Exposed"
+            imageLocation="https://1qfpnw417h1n3a4c4m10ltpd-wpengine.netdna-ssl.com/wp-content/uploads/2017/01/10-PLO-Secrets-Exposed-v2-300x195.png"
+          />
+        </View>
+      </ScrollView>
+    </View>
+  );
+}
+
+export default FreeResourcesScrollView;
