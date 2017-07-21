@@ -78,7 +78,3 @@ class MyHomeScreen extends React.Component {
 }
 
 export default MyHomeScreen;
-
-MyHomeScreen.propTypes = {
-  navigation: PropTypes.func.isRequired,
-};
