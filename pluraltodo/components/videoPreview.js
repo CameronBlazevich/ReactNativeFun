@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
+import * as dougPolkWinnerPhoto from '../img/Doug_Polk_Winner_Photo.jpg';
 
 const styles = StyleSheet.create({
   preview: {
@@ -9,8 +10,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function VideoPreview(props) {
-  return <Image style={styles.preview} source={require('../img/Doug_Polk_Winner_Photo.jpg')} />;
+function VideoPreview() {
+  return <Image style={styles.preview} source={dougPolkWinnerPhoto.default} />;
 }
 
 export default VideoPreview;

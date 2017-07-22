@@ -1,7 +1,9 @@
 import React from 'react';
 import { Image, Button, StyleSheet, View, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
 import HeadingRow from './headingRow';
 import VideoPreview from './videoPreview';
+import * as playIcon from '../icons/play-icon.png';
 
 const styles = StyleSheet.create({
   icon: {
@@ -23,7 +25,7 @@ class VideoScreen extends React.Component {
     tabBarLabel: 'Videos',
     // Note: By default the icon is only shown on iOS. Search the showIcon option below.
     tabBarIcon: ({ tintColor }) =>
-      <Image source={require('../icons/play-icon.png')} style={[styles.icon, { tintColor }]} />,
+      <Image source={playIcon.default} style={[styles.icon, { tintColor }]} />,
   };
 
   render() {
@@ -65,3 +67,7 @@ class VideoScreen extends React.Component {
 }
 
 export default VideoScreen;
+
+VideoScreen.propTypes = {
+  navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired,
+};
