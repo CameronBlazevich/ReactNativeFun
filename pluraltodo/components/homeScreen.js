@@ -1,9 +1,10 @@
 import React from 'react';
 import { Image, StyleSheet, View, ScrollView } from 'react-native';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import TrainingProductScrollView from './trainingProductScrollView';
 import FreeResourcesScrollView from './freeResourcesScrollView';
 import TrainingProductApi from '../services/mockServices/mockTrainingProductApi';
+import * as homeIcon from '../icons/home-icon.png';
 
 const styles = StyleSheet.create({
   icon: {
@@ -31,26 +32,23 @@ const styles = StyleSheet.create({
 class MyHomeScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'Home',
-    // Note: By default the icon is only shown on iOS. Search the showIcon option below.
     tabBarIcon: ({ tintColor }) =>
-      <Image source={require('../icons/home-icon.png')} style={[styles.icon, { tintColor }]} />,
+      <Image source={homeIcon.default} style={[styles.icon, { tintColor }]} />,
   };
+
+  static async getAllTrainingProducts() {
+    const trainingProducts = await TrainingProductApi.getAllTrainingProducts();
+    return trainingProducts;
+  }
 
   constructor(props) {
     super(props);
     this.state = { trainingProducts: [] };
-
-    this.getAllTrainingProducts = this.getAllTrainingProducts.bind(this);
   }
 
   async componentWillMount() {
-    const trainingProducts = await this.getAllTrainingProducts();
+    const trainingProducts = await MyHomeScreen.getAllTrainingProducts();
     this.setState({ trainingProducts });
-  }
-
-  async getAllTrainingProducts() {
-    const trainingProducts = await TrainingProductApi.getAllTrainingProducts();
-    return trainingProducts;
   }
 
   openDetailsScreen = (productId) => {
@@ -69,7 +67,7 @@ class MyHomeScreen extends React.Component {
               onSelectTrainingProduct={this.openDetailsScreen}
             />
             <View style={{ height: 35 }} />
-            <FreeResourcesScrollView />
+            <FreeResourcesScrollView onSelectTrainingProduct={this.openDetailsScreen} />
           </ScrollView>
         </View>
       </View>
@@ -78,3 +76,9 @@ class MyHomeScreen extends React.Component {
 }
 
 export default MyHomeScreen;
+
+MyHomeScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};

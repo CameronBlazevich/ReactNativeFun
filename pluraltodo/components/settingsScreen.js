@@ -1,5 +1,7 @@
 import React from 'react';
 import { Image, Button, StyleSheet, View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import * as settingsIcon from '../icons/settings-icon1.png';
 
 const styles = StyleSheet.create({
   icon: {
@@ -20,10 +22,7 @@ class SettingsScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'Settings',
     tabBarIcon: ({ tintColor }) =>
-      (<Image
-        source={require('../icons/settings-icon1.png')}
-        style={[styles.icon, { tintColor }]}
-      />),
+      <Image source={settingsIcon.default} style={[styles.icon, { tintColor }]} />,
   };
 
   render() {
@@ -39,3 +38,9 @@ class SettingsScreen extends React.Component {
 }
 
 export default SettingsScreen;
+
+SettingsScreen.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+  }).isRequired,
+};

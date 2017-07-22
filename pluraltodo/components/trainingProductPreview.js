@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Image, StyleSheet, Text, TouchableHighlight } from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   preview: {
@@ -35,3 +36,10 @@ function TrainingProductPreview(props) {
 }
 
 export default TrainingProductPreview;
+
+TrainingProductPreview.propTypes = {
+  imageLocation: PropTypes.string.isRequired,
+  onSelectTrainingProduct: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+};

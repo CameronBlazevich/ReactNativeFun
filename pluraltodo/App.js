@@ -48,12 +48,8 @@ const MyApp = TabNavigator(
   },
 );
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.setState({ errors: [] });
-  }
-  render() {
-    return <MyApp />;
-  }
+function App() {
+  return <MyApp />;
 }
+
+export default App;

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, Button, StyleSheet, View, Text } from 'react-native';
+import { Button, StyleSheet, View, Text } from 'react-native';
+import PropTypes from 'prop-types';
 import TrainingProductDetailApi from '../services/mockServices/mockTrainingProductDetailApi';
 
 const styles = StyleSheet.create({
@@ -24,7 +25,7 @@ class DetailScreen extends React.Component {
     console.log(productDetail);
   }
 
-  render(props) {
+  render() {
     return (
       <View style={styles.container}>
         <View style={styles.body}>
@@ -37,3 +38,9 @@ class DetailScreen extends React.Component {
 }
 
 export default DetailScreen;
+
+DetailScreen.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+  }).isRequired,
+};

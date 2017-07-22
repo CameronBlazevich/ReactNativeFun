@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   icon: {
@@ -27,3 +28,7 @@ function HeadingRow(props) {
 }
 
 export default HeadingRow;
+
+HeadingRow.propTypes = {
+  text: PropTypes.string.isRequired,
+};
