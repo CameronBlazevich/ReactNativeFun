@@ -23,18 +23,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function VideoPreview({ video, onPressVideo }) {
-  // console.log(`video: ${JSON.stringify(video)}`);
+function VideoPreview(props) {
   return (
-    <TouchableOpacity onPress={() => onPressVideo(video.id)}>
+    <TouchableOpacity onPress={props.onPressVideo}>
       <View style={styles.container}>
         <Image
-          source={{ uri: video.thumbnailUrl }}
+          source={{ uri: props.video.thumbnailUrl }}
           style={styles.preview}
           resizeMode={Image.resizeMode.cover}
         />
         <Text style={styles.title}>
-          {video.title}
+          {props.video.title}
         </Text>
       </View>
     </TouchableOpacity>
@@ -45,8 +44,9 @@ export default VideoPreview;
 
 VideoPreview.propTypes = {
   video: PropTypes.shape({
-    thumbnail: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    thumbnailUrl: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
   }).isRequired,
   onPressVideo: PropTypes.func.isRequired,
 };

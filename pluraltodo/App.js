@@ -5,6 +5,7 @@ import MyHomeScreen from './components/homeScreen';
 import SettingsScreen from './components/settingsScreen';
 import VideosScreen from './components/videosScreen';
 import DetailScreen from './components/detailScreen';
+import VideoPlayer from './components/videoPlayer';
 
 const StackNav = StackNavigator(
   {
@@ -13,6 +14,9 @@ const StackNav = StackNavigator(
     },
     Details: {
       screen: DetailScreen,
+    },
+    VideoPlayer: {
+      screen: VideoPlayer,
     },
   },
   {

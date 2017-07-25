@@ -3,7 +3,7 @@ import { Image, Button, StyleSheet, View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { DOMParser } from 'xmldom';
 import HeadingRow from './headingRow';
-import VideoPreview from './videoPreview';
+import VideoScrollView from './videoScrollView';
 import * as playIcon from '../icons/play-icon.png';
 
 const styles = StyleSheet.create({
@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
 class VideoScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'Videos',
-    // Note: By default the icon is only shown on iOS. Search the showIcon option below.
     tabBarIcon: ({ tintColor }) =>
       <Image source={playIcon.default} style={[styles.icon, { tintColor }]} />,
   };
@@ -35,7 +34,6 @@ class VideoScreen extends React.Component {
   }
 
   getInitialState() {
-    console.log('getting initial state');
     return {
       playlistId: 'PLFZTVU_cpCnubbV-pY4f7wg13rEzXbAeO',
       videos: [],
@@ -61,14 +59,12 @@ class VideoScreen extends React.Component {
   }
 
   parseVideos(responseText) {
-    console.log(`Got feed with length: ${responseText.length}`);
     const doc = new DOMParser().parseFromString(responseText, 'text/xml');
     const objs = [];
     const videos = doc.getElementsByTagName('yt:videoId');
     const thumbs = doc.getElementsByTagName('media:thumbnail');
     const titles = doc.getElementsByTagName('media:title');
-    // console.log(JSON.stringify(titles[0]));
-    // console.log(titles);
+
     for (let i = 0; i < videos.length; i++) {
       objs.push({
         id: videos[i].textContent,
@@ -85,13 +81,17 @@ class VideoScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.body}>
-          <HeadingRow text="Doug's Videos" />
-          <ScrollView horizontal>
-            {this.state.videos.map(video => <VideoPreview video={video} />)}
+          <ScrollView>
+            <HeadingRow text="Poker Thoughts" />
+            <VideoScrollView videos={this.state.videos} navigation={this.props.navigation} />
+            <HeadingRow text="Polker Hands" />
+            <VideoScrollView videos={this.state.videos} navigation={this.props.navigation} />
+            <HeadingRow text="Polker Hands" />
+            <VideoScrollView videos={this.state.videos} navigation={this.props.navigation} />
           </ScrollView>
         </View>
         <Button
-          onPress={() => this.props.navigation.navigate('Notifications')}
+          onPress={() => this.props.navigation.navigate('VideoPlayer')}
           title="Go to notifications"
         />
       </View>
