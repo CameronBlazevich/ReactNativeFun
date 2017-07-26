@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: 165,
-    height: 125,
+    height: 145,
   },
 });
 
