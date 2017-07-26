@@ -1,17 +1,52 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
-import * as dougPolkWinnerPhoto from '../img/Doug_Polk_Winner_Photo.jpg';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   preview: {
-    width: 125,
-    height: 100,
+    width: 160,
+    height: 120,
     margin: 5,
+  },
+  video: {
+    height: 450,
+    width: 500,
+  },
+  title: {
+    textAlign: 'center',
+  },
+  container: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: 165,
+    height: 145,
   },
 });
 
-function VideoPreview() {
-  return <Image style={styles.preview} source={dougPolkWinnerPhoto.default} />;
+function VideoPreview(props) {
+  return (
+    <TouchableOpacity onPress={props.onPressVideo}>
+      <View style={styles.container}>
+        <Image
+          source={{ uri: props.video.thumbnailUrl }}
+          style={styles.preview}
+          resizeMode={Image.resizeMode.cover}
+        />
+        <Text style={styles.title}>
+          {props.video.title}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
 }
 
 export default VideoPreview;
+
+VideoPreview.propTypes = {
+  video: PropTypes.shape({
+    thumbnailUrl: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
+  onPressVideo: PropTypes.func.isRequired,
+};
