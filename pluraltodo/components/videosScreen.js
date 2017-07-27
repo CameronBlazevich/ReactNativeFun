@@ -5,6 +5,7 @@ import { DOMParser } from 'xmldom';
 import HeadingRow from './headingRow';
 import VideoScrollView from './videoScrollView';
 import * as playIcon from '../icons/play-icon.png';
+import store from '../appStore';
 
 const styles = StyleSheet.create({
   icon: {
@@ -27,38 +28,8 @@ class VideoScreen extends React.Component {
     tabBarIcon: ({ tintColor }) =>
       <Image source={playIcon.default} style={[styles.icon, { tintColor }]} />,
   };
-  constructor(props) {
-    super(props);
 
-    this.state = this.getInitialState();
-  }
-
-  getInitialState() {
-    return {
-      playlistId: 'PLFZTVU_cpCnubbV-pY4f7wg13rEzXbAeO',
-      videos: [],
-    };
-  }
-
-  componentDidMount() {
-    this.fetchVideos();
-  }
-  // GET RID OF THESE PROMISES AND USE ASYNC AWAIT
-  fetchVideos() {
-    console.log('Fetching video feed...');
-    const url = `${'https://www.youtube.com/feeds/videos.xml?playlist_id='}${this.state
-      .playlistId}`;
-    fetch(url)
-      .then(response => response.text())
-      .then((responseText) => {
-        this.parseVideos(responseText);
-      })
-      .catch((error) => {
-        console.log('Error fetching the feed: ', error);
-      });
-  }
-
-  parseVideos(responseText) {
+  static parseVideos(responseText) {
     const doc = new DOMParser().parseFromString(responseText, 'text/xml');
     const objs = [];
     const videos = doc.getElementsByTagName('yt:videoId');
@@ -74,7 +45,35 @@ class VideoScreen extends React.Component {
         title: titles[i].textContent,
       });
     }
-    this.setState({ videos: objs });
+    // this.setState({ videos: objs });
+    store.dispatch({
+      type: 'ADD_VIDEOS',
+      videos: objs,
+    });
+  }
+  constructor(props) {
+    super(props);
+
+    this.state = store.getState();
+    store.subscribe(() => this.setState(store.getState()));
+  }
+
+  componentDidMount() {
+    this.fetchVideos();
+  }
+  // GET RID OF THESE PROMISES AND USE ASYNC AWAIT
+  fetchVideos() {
+    console.log('Fetching video feed...');
+    const url = `${'https://www.youtube.com/feeds/videos.xml?playlist_id='}${this.state
+      .playlistId}`;
+    fetch(url)
+      .then(response => response.text())
+      .then((responseText) => {
+        VideoScreen.parseVideos(responseText);
+      })
+      .catch((error) => {
+        console.log('Error fetching the feed: ', error);
+      });
   }
 
   render() {
