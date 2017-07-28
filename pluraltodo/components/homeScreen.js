@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import TrainingProductScrollView from './trainingProductScrollView';
 import FreeResourcesScrollView from './freeResourcesScrollView';
 import TrainingProductApi from '../services/mockServices/mockTrainingProductApi';
+import store from '../appStore';
 import * as homeIcon from '../icons/home-icon.png';
 
 const styles = StyleSheet.create({
@@ -43,12 +44,17 @@ class MyHomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { trainingProducts: [] };
+    this.state = store.getState();
+
+    store.subscribe(() => this.setState(store.getState));
   }
 
   async componentWillMount() {
     const trainingProducts = await MyHomeScreen.getAllTrainingProducts();
-    this.setState({ trainingProducts });
+    store.dispatch({
+      type: 'ADD_TRAINING_PRODUCTS',
+      trainingProducts,
+    });
   }
 
   openDetailsScreen = (productId) => {
