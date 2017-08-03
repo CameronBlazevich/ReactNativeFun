@@ -1,7 +1,13 @@
 import React from 'react';
-import { Button, StyleSheet, View, Text } from 'react-native';
+import { Button, StyleSheet, View, Text, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-import TrainingProductDetailApi from '../services/mockServices/mockTrainingProductDetailApi';
+import TrainingProductPreview from './trainingProductPreview';
+import store from '../appStore';
+// import TrainingProductDetailApi from '../services/mockServices/mockTrainingProductDetailApi';
+import LabApi from '../services/mockServices/mockLabApi';
+import ArrayManipulation from '../services/arrayManipulation';
+import HeadingRow from './headingRow';
+import BackgroundImage from './backgroundImage';
 
 const styles = StyleSheet.create({
   icon: {
@@ -10,29 +16,71 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    backgroundColor: '#d3d3d3',
+    flexDirection: 'column',
   },
   container: {
     flex: 1,
+    alignItems: 'center',
   },
+  scrollView: {},
 });
 
 class DetailScreen extends React.Component {
-  async componentWillMount() {
-    // need to figure out how to pass props on navigation
-    const productDetail = await TrainingProductDetailApi.getTrainingProductDetailById(2);
-    console.log(productDetail);
+  constructor(props) {
+    super(props);
+    this.state = store.getState();
+    store.subscribe(() => this.setState(store.getState()));
   }
 
+  async componentWillMount() {
+    // need to figure out how to pass props on navigation
+    // const id = 1;
+    // const productDetail = await TrainingProductDetailApi.getTrainingProductDetailById(id);
+    const labModules = await LabApi.getAllLabModules();
+    store.dispatch({ type: 'ADD_LAB_DETAILS', labModules });
+  }
+  clicked = (moduleId) => {
+    store.dispatch({ type: 'LAB_MODULE_SELECTED', moduleId });
+    this.props.navigation.navigate('LabModule');
+  };
   render() {
+    const modulePairArray = ArrayManipulation.createArrayOfPairsFromOriginalArray(
+      this.state.labModules,
+    );
+
+    const modulesForDisplay = modulePairArray.map((modulePair, index) =>
+      (<View
+        key={index.toString()}
+        style={{
+          flexDirection: 'row',
+          flex: 1,
+          justifyContent: 'center',
+        }}
+      >
+        {modulePair.pairEntry.map(module =>
+          (<TrainingProductPreview
+            key={module.id}
+            id={module.id}
+            title={module.title}
+            imageLocation={module.imageLocation}
+            onSelectTrainingProduct={this.clicked}
+          />),
+        )}
+      </View>),
+    );
     return (
-      <View style={styles.container}>
-        <View style={styles.body}>
-          <Text>This is the Details Screen</Text>
+      <BackgroundImage>
+        <View style={styles.container}>
+          <HeadingRow text="The Lab" />
+          <ScrollView style={styles.scrollView}>
+            {modulesForDisplay}
+          </ScrollView>
+          <Button onPress={() => this.props.navigation.goBack()} title="Go back home" />
         </View>
-        <Button onPress={() => this.props.navigation.goBack()} title="Go back home" />
-      </View>
+      </BackgroundImage>
     );
   }
 }

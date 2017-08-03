@@ -92,11 +92,12 @@ class SettingsScreen extends React.Component {
           </View>
         </View>
         <FlatList
+          keyExtractor={item => item}
           data={this.state.trainingProducts
             // .filter(product => product.purchased === 0)
             .map(product => product.title)}
           renderItem={({ item }) =>
-            (<View style={styles.listItem}>
+            (<View style={styles.listItem} key={item}>
               <View style={{ flexDirection: 'column', alignSelf: 'center' }}>
                 <Text>
                   {item}

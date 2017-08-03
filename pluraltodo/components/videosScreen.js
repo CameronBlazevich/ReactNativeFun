@@ -6,6 +6,7 @@ import HeadingRow from './headingRow';
 import VideoScrollView from './videoScrollView';
 import * as playIcon from '../icons/play-icon.png';
 import store from '../appStore';
+import BackgroundImage from './backgroundImage';
 
 const styles = StyleSheet.create({
   icon: {
@@ -29,14 +30,14 @@ class VideoScreen extends React.Component {
       <Image source={playIcon.default} style={[styles.icon, { tintColor }]} />,
   };
 
-  static parseVideos(responseText) {
+  static parseVideos(responseText, playlistId) {
     const doc = new DOMParser().parseFromString(responseText, 'text/xml');
     const objs = [];
     const videos = doc.getElementsByTagName('yt:videoId');
     const thumbs = doc.getElementsByTagName('media:thumbnail');
     const titles = doc.getElementsByTagName('media:title');
 
-    for (let i = 0; i < videos.length; i++) {
+    for (let i = 0; i < videos.length; i += 1) {
       objs.push({
         id: videos[i].textContent,
         thumbnailUrl: thumbs[i].getAttribute('url'),
@@ -45,11 +46,33 @@ class VideoScreen extends React.Component {
         title: titles[i].textContent,
       });
     }
-    // this.setState({ videos: objs });
-    store.dispatch({
-      type: 'ADD_VIDEOS',
-      videos: objs,
-    });
+    if (playlistId === 'PLFZTVU_cpCnubbV-pY4f7wg13rEzXbAeO') {
+      store.dispatch({
+        type: 'ADD_POKER_THOUGHTS_VIDEOS',
+        videos: objs,
+      });
+    }
+
+    if (playlistId === 'PLFZTVU_cpCnsE_KqKYjAE132HywfN1vrt') {
+      store.dispatch({
+        type: 'ADD_POLKER_HANDS_VIDEOS',
+        videos: objs,
+      });
+    }
+
+    if (playlistId === 'PLFZTVU_cpCnubbV-pY4f7wg13rEzXbAeO') {
+      store.dispatch({
+        type: 'ADD_POKER_THOUGHTS_VIDEOS',
+        videos: objs,
+      });
+    }
+
+    if (playlistId === 'PLFZTVU_cpCnvrAMVyoALKyfVVimTR9l4Z') {
+      store.dispatch({
+        type: 'ADD_VLOG_VIDEOS',
+        videos: objs,
+      });
+    }
   }
   constructor(props) {
     super(props);
@@ -59,17 +82,17 @@ class VideoScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchVideos();
+    this.fetchVideos(this.state.pokerThoughtsPlaylistId);
+    this.fetchVideos(this.state.polkerHandsPlaylistId);
+    this.fetchVideos(this.state.vlogPlaylistId);
   }
   // GET RID OF THESE PROMISES AND USE ASYNC AWAIT
-  fetchVideos() {
-    console.log('Fetching video feed...');
-    const url = `${'https://www.youtube.com/feeds/videos.xml?playlist_id='}${this.state
-      .playlistId}`;
+  fetchVideos(playlistId) {
+    const url = `${'https://www.youtube.com/feeds/videos.xml?playlist_id='}${playlistId}`;
     fetch(url)
       .then(response => response.text())
       .then((responseText) => {
-        VideoScreen.parseVideos(responseText);
+        VideoScreen.parseVideos(responseText, playlistId);
       })
       .catch((error) => {
         console.log('Error fetching the feed: ', error);
@@ -78,22 +101,30 @@ class VideoScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.body}>
-          <ScrollView>
-            <HeadingRow text="Poker Thoughts" />
-            <VideoScrollView videos={this.state.videos} navigation={this.props.navigation} />
-            <HeadingRow text="Polker Hands" />
-            <VideoScrollView videos={this.state.videos} navigation={this.props.navigation} />
-            <HeadingRow text="Polker Hands" />
-            <VideoScrollView videos={this.state.videos} navigation={this.props.navigation} />
-          </ScrollView>
+      <BackgroundImage>
+        <View style={styles.container}>
+          <View style={styles.body}>
+            <ScrollView>
+              <HeadingRow text="Poker Thoughts" color="white" />
+              <VideoScrollView
+                videos={this.state.pokerThoughtsVideos}
+                navigation={this.props.navigation}
+              />
+              <HeadingRow text="Polker Hands" color="white" />
+              <VideoScrollView
+                videos={this.state.polkerHandsVideos}
+                navigation={this.props.navigation}
+              />
+              <HeadingRow text="Vlogs" color="white" />
+              <VideoScrollView videos={this.state.vlogVideos} navigation={this.props.navigation} />
+            </ScrollView>
+          </View>
+          <Button
+            onPress={() => this.props.navigation.navigate('HomeScreen')}
+            title="Go back home"
+          />
         </View>
-        <Button
-          onPress={() => this.props.navigation.navigate('VideoPlayer')}
-          title="Go to notifications"
-        />
-      </View>
+      </BackgroundImage>
     );
   }
 }

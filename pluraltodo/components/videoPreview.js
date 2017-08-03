@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     width: 160,
     height: 120,
     margin: 5,
+    borderStyle: 'solid',
+    borderColor: 'white',
+    borderWidth: 1,
   },
   video: {
     height: 450,
@@ -14,12 +17,13 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
+    color: 'white',
   },
   container: {
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: 165,
-    height: 145,
+    height: 165,
   },
 });
 

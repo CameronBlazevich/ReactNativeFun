@@ -7,7 +7,7 @@ import TrainingProductPreview from './trainingProductPreview';
 function FreeResourcesScrollView(props) {
   return (
     <View>
-      <HeadingRow text="Free Resources" />
+      <HeadingRow text="Free Resources" color="white" />
       <ScrollView horizontal>
         <View>
           <TrainingProductPreview

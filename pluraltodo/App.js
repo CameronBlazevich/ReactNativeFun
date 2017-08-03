@@ -6,7 +6,9 @@ import SettingsScreen from './components/settingsScreen';
 import VideosScreen from './components/videosScreen';
 import DetailScreen from './components/detailScreen';
 import VideoPlayer from './components/videoPlayer';
+import LabModuleScreen from './components/labModuleScreen';
 
+console.disableYellowBox = true;
 const StackNav = StackNavigator(
   {
     Home: {
@@ -17,6 +19,9 @@ const StackNav = StackNavigator(
     },
     VideoPlayer: {
       screen: VideoPlayer,
+    },
+    LabModule: {
+      screen: LabModuleScreen,
     },
   },
   {

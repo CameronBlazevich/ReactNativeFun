@@ -3,6 +3,7 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import HeadingRow from './headingRow';
 import TrainingProductPreview from './trainingProductPreview';
+import ArrayManipulation from '../services/arrayManipulation';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,25 +12,10 @@ const styles = StyleSheet.create({
   scrollContainer: {},
 });
 
-function BuildArrayOfPairsOfProductsForDisplayingTwoRows(props) {
-  const productPairArray = [];
-  let pair = [];
-
-  props.trainingProducts.forEach((product, index) => {
-    pair.push(product);
-    if (product.id % 2 !== 0 || index === props.trainingProducts.length - 1) {
-      productPairArray.push({ pair, id: index });
-      pair = [];
-    }
-  });
-
-  return productPairArray;
-}
-
 function MapProductPairsToViewComponentsContainingUpToTwoProducts(productPairArray, props) {
   const trainingProductsForDisplay = productPairArray.map(productPair =>
     (<View key={productPair.id}>
-      {productPair.pair.map(product =>
+      {productPair.pairEntry.map(product =>
         (<TrainingProductPreview
           key={product.id}
           id={product.id}
@@ -45,7 +31,9 @@ function MapProductPairsToViewComponentsContainingUpToTwoProducts(productPairArr
 }
 
 function TrainingProductScrollView(props) {
-  const productPairArray = BuildArrayOfPairsOfProductsForDisplayingTwoRows(props);
+  const productPairArray = ArrayManipulation.createArrayOfPairsFromOriginalArray(
+    props.trainingProducts,
+  );
   const trainingProductsForDisplay = MapProductPairsToViewComponentsContainingUpToTwoProducts(
     productPairArray,
     props,
@@ -53,7 +41,7 @@ function TrainingProductScrollView(props) {
 
   return (
     <View style={styles.container}>
-      <HeadingRow text="Training Products" />
+      <HeadingRow text="Training Products" color="white" />
       <ScrollView horizontal style={styles.scrollContainer}>
         {trainingProductsForDisplay}
       </ScrollView>

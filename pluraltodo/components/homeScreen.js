@@ -6,6 +6,7 @@ import FreeResourcesScrollView from './freeResourcesScrollView';
 import TrainingProductApi from '../services/mockServices/mockTrainingProductApi';
 import store from '../appStore';
 import * as homeIcon from '../icons/home-icon.png';
+import BackgroundImage from './backgroundImage';
 
 const styles = StyleSheet.create({
   icon: {
@@ -65,18 +66,20 @@ class MyHomeScreen extends React.Component {
   render() {
     const { trainingProducts } = this.state;
     return (
-      <View style={styles.container}>
-        <View style={styles.body}>
-          <ScrollView>
-            <TrainingProductScrollView
-              trainingProducts={trainingProducts}
-              onSelectTrainingProduct={this.openDetailsScreen}
-            />
-            <View style={{ height: 35 }} />
-            <FreeResourcesScrollView onSelectTrainingProduct={this.openDetailsScreen} />
-          </ScrollView>
+      <BackgroundImage>
+        <View style={styles.container}>
+          <View style={styles.body}>
+            <ScrollView>
+              <TrainingProductScrollView
+                trainingProducts={trainingProducts}
+                onSelectTrainingProduct={this.openDetailsScreen}
+              />
+              <View style={{ height: 35 }} />
+              <FreeResourcesScrollView onSelectTrainingProduct={this.openDetailsScreen} />
+            </ScrollView>
+          </View>
         </View>
-      </View>
+      </BackgroundImage>
     );
   }
 }

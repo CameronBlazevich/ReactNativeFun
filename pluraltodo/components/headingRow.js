@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 function HeadingRow(props) {
   return (
     <View style={styles.headingContainer}>
-      <Text style={styles.heading}>
+      <Text style={[styles.heading, { color: props.color }]}>
         {props.text}
       </Text>
     </View>
@@ -29,6 +29,11 @@ function HeadingRow(props) {
 
 export default HeadingRow;
 
+HeadingRow.defaultProps = {
+  color: 'black',
+};
+
 HeadingRow.propTypes = {
   text: PropTypes.string.isRequired,
+  color: PropTypes.string,
 };
